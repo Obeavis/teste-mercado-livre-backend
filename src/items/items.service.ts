@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ItemDto } from 'src/item/item.dto';
 import { ItemsDto } from './items.dto';
@@ -17,26 +17,29 @@ export class ItemsService {
       .pipe(map((response) => response.data));
   }
 
-  public getItem(id) {
-    const item = this.http.get<ItemDto>(
-      `${process.env.BASE_API_URL}/items/${id}`,
-    );
-    const description = this.http.get(
-      `${process.env.BASE_API_URL}/items/${id}/description`,
-    );
+  public async getItem(id) {
+    try {
+      const item = await firstValueFrom(
+        this.http.get<ItemDto>(`${process.env.BASE_API_URL}/items/${id}`),
+      );
 
-    const teste = forkJoin({
-      item,
-      description,
-    }).pipe(
-      map((resp) => {
-        return {
-          item: resp.item?.data,
-          description: resp.description?.data,
-        };
-      }),
-    );
+      const categories = await firstValueFrom(
+        this.http.get(
+          `${process.env.BASE_API_URL}/categories/${item?.data?.category_id}`,
+        ),
+      );
 
-    return teste;
+      const description = await firstValueFrom(
+        this.http.get(`${process.env.BASE_API_URL}/items/${id}/description`),
+      );
+
+      return {
+        item: item?.data,
+        description: description?.data,
+        categories: categories.data,
+      };
+    } catch (error) {
+      return error;
+    }
   }
 }

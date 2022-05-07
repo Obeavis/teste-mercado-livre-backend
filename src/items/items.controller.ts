@@ -1,6 +1,5 @@
 import { Controller, Get, Query, Param } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { ItemDto } from 'src/item/item.dto';
 import { ItemMapper } from 'src/item/item.mapper';
 import { ItemsDto } from './items.dto';
 import { ItemsMapper } from './items.mapper';
@@ -18,7 +17,13 @@ export class ItemsController {
   }
 
   @Get('/:id')
-  public getItem(@Param('id') id: string): Observable<ItemDto> {
-    return this.service.getItem(id).pipe(map(ItemMapper.mapItem));
+  public async getItem(@Param('id') id: string) {
+    try {
+      const response = await this.service.getItem(id);
+
+      return ItemMapper.mapItem(response);
+    } catch (error) {
+      return error;
+    }
   }
 }

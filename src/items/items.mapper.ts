@@ -21,6 +21,7 @@ export class ItemsMapper {
           condition: result.condition,
           free_shipping: result.shipping?.free_shipping,
           sold_quantity: result.sold_quantity,
+          category_id: result.category_id,
           description: result.description,
         });
       }),

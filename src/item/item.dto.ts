@@ -9,6 +9,8 @@ export interface ItemInterface {
   condition: string;
   free_shipping: boolean;
   sold_quantity: number;
+  category_id: string;
+  categories?: string[];
   description: string;
 }
 
@@ -24,6 +26,8 @@ export class ItemDto implements ItemInterface {
   public free_shipping: boolean;
   public sold_quantity: number;
   public description: string;
+  public categories?: string[];
+  public category_id: string;
 
   constructor({
     id,
@@ -34,6 +38,8 @@ export class ItemDto implements ItemInterface {
     free_shipping,
     sold_quantity,
     description,
+    category_id,
+    categories,
   }: ItemInterface) {
     this.id = id;
     this.title = title;
@@ -42,6 +48,8 @@ export class ItemDto implements ItemInterface {
     this.condition = condition;
     this.free_shipping = free_shipping;
     this.sold_quantity = sold_quantity;
+    this.category_id = category_id;
+    this.categories = categories;
     this.description = description;
   }
 }
