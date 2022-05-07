@@ -5,7 +5,8 @@ export interface ItemInterface {
     currency: string;
     amount: number;
   };
-  picture: string;
+  thumbnail: string;
+  pictures?: string[];
   condition: string;
   free_shipping: boolean;
   sold_quantity: number;
@@ -21,7 +22,8 @@ export class ItemDto implements ItemInterface {
     currency: string;
     amount: number;
   };
-  public picture: string;
+  public thumbnail: string;
+  public pictures?: string[];
   public condition: string;
   public free_shipping: boolean;
   public sold_quantity: number;
@@ -33,7 +35,8 @@ export class ItemDto implements ItemInterface {
     id,
     title,
     price,
-    picture,
+    thumbnail,
+    pictures,
     condition,
     free_shipping,
     sold_quantity,
@@ -44,7 +47,8 @@ export class ItemDto implements ItemInterface {
     this.id = id;
     this.title = title;
     this.price = price;
-    this.picture = picture;
+    this.thumbnail = thumbnail;
+    this.pictures = pictures;
     this.condition = condition;
     this.free_shipping = free_shipping;
     this.sold_quantity = sold_quantity;

@@ -17,7 +17,7 @@ export class ItemsMapper {
             currency: result.prices?.presentation?.display_currency,
             amount: result.price,
           },
-          picture: result.thumbnail,
+          thumbnail: result.thumbnail,
           condition: result.condition,
           free_shipping: result.shipping?.free_shipping,
           sold_quantity: result.sold_quantity,
