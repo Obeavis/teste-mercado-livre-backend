@@ -45,6 +45,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+Open http://localhost:5000/items on browser
+
 ## Test
 
 ```bash
